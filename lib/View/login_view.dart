@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lista_de_compras/View/central_view.dart';
 import 'package:lista_de_compras/View/sobre_view.dart';
 
 class LoginView extends StatefulWidget {
@@ -12,8 +13,24 @@ class _LoginViewState extends State<LoginView> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _senhaController = TextEditingController();
 
+  bool _emailValido = true;
+  bool _senhaValida = true;
+
+
   void _login() {
-    // Lógica de login aqui
+
+    if(_emailController.text.isEmpty || _senhaController.text.isEmpty){
+      setState(() {
+        _emailValido = _emailController.text.isNotEmpty;
+        _senhaValida = _senhaController.text.isNotEmpty;
+      });
+      return;
+    }
+
+    Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => CentralView()),
+    );
   }
 
  void _navegateSobre(BuildContext context) {
@@ -47,6 +64,7 @@ class _LoginViewState extends State<LoginView> {
                 controller: _emailController,
                 decoration: InputDecoration(
                   labelText: 'Email',
+                  errorText: _emailValido ? null : 'Por favor informe o email',
                   contentPadding: EdgeInsets.all(10),
                   border: InputBorder.none,
                 ),
@@ -62,6 +80,7 @@ class _LoginViewState extends State<LoginView> {
               controller: _senhaController,
               decoration: InputDecoration(
                 labelText: 'Senha',
+                errorText: _senhaValida ? null : 'Por favor informe a senha',
                 contentPadding: EdgeInsets.all(10), 
                   border: InputBorder.none,
               ),
