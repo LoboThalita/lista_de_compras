@@ -1,3 +1,3 @@
 # lista_de_compras
 
-A new Flutter project.
+Trabalho da matéria eletiva de Dispositivos Móveis da FATEC Ribeirão Preto.
