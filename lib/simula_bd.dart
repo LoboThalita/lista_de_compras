@@ -3,6 +3,14 @@ class SimulaBD {
   static String email = 'adm@gmail.com';
   static String senha = '123';
 
+  
+//refatorar todo o BD para essa lsita dinamica
+  static List<List<dynamic>> listas = [
+    ['Lista 1', ['Item 1', 'Item 2', 'Item 3']],
+    ['Lista 2', ['Item A', 'Item B', 'Item C']],
+    ['Lista 3', ['Item X', 'Item Y', 'Item Z']],
+  ];
+
   static void adicionarLista(String nome) {
     listaDeNomes.add(nome);
   }

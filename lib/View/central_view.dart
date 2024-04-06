@@ -18,7 +18,7 @@ class _CentralViewState extends State<CentralView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Sua Lista de Compras'),
+        title: const Text('Suas Listas de Compras'),
       ),
       body: ListView.builder(
         itemCount: listaDeNomes.length,
