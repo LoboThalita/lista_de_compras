@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lista_de_compras/Componentes/lista_comp.dart';
+import 'package:lista_de_compras/simula_bd.dart';
+import 'package:lista_de_compras/View/lista_view.dart';
 
 class CentralView extends StatefulWidget {
   const CentralView({Key? key}) : super(key: key);
@@ -9,27 +11,53 @@ class CentralView extends StatefulWidget {
 }
 
 class _CentralViewState extends State<CentralView> {
-  List<String> listaDeNomes = ['Lista 1', 'Lista 2', 'Lista 3','Lista 4']; // Exemplo de lista de nomes
+  List<String> listaDeNomes = SimulaBD.recuperarListas();
+  int _hoverIndex = -1;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Sua Lista de Compras'),
+        title: const Text('Sua Lista de Compras'),
       ),
       body: ListView.builder(
         itemCount: listaDeNomes.length,
         itemBuilder: (context, index) {
-          return Center(
-            child: Container(
-              width: 350, 
-              height: 100, 
-              margin: EdgeInsets.symmetric(vertical: 5),
-              decoration: BoxDecoration(
-                color: Colors.grey[100],
-                borderRadius: BorderRadius.circular(10),
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ListaView(
+                    nomeLista: listaDeNomes[index],
+                    lista: listaDeNomes,
+                  ),
+                ),
+              );
+            },
+            child: MouseRegion(
+              onEnter: (_) {
+                setState(() {
+                  _hoverIndex = index;
+                });
+              },
+              onExit: (_) {
+                setState(() {
+                  _hoverIndex = -1;
+                });
+              },
+              child: Center(
+                child: Container(
+                  width: 350,
+                  height: 100,
+                  margin: const EdgeInsets.symmetric(vertical: 5),
+                  decoration: BoxDecoration(
+                    color: _hoverIndex == index ? const Color.fromARGB(255, 220, 187, 251) : Colors.grey[100],
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: ListaComp(nomeLista: listaDeNomes[index]),
+                ),
               ),
-              child: ListaComp(nomeLista: listaDeNomes[index]), // Passa o nome da lista para o componente ListaComp
             ),
           );
         },
@@ -38,7 +66,7 @@ class _CentralViewState extends State<CentralView> {
         onPressed: () {
           // Lógica para adicionar uma nova lista
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }

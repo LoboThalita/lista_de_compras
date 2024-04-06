@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class SobreView extends StatelessWidget{
+class SobreView extends StatelessWidget {
   const SobreView({super.key});
 
   @override
@@ -25,6 +25,15 @@ class SobreView extends StatelessWidget{
               'App desenvolvido para a matéria eletiva de Programação em Dispositivos Móveis, Ministrada pelo professor Rodrigo Plotz pela FATEC de Ribeirão Preto',
               style: TextStyle(fontSize: 16),
             ),
+            Text(
+              'Login:',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text('Email: adm@gmail.com'),
+            Text('Senha: 123'),
           ],
         ),
       ),
