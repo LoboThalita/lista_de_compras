@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lista_de_compras/Componentes/lista_comp.dart';
+import 'package:lista_de_compras/View/nova_lista_view.dart';
 import 'package:lista_de_compras/simula_bd.dart';
 import 'package:lista_de_compras/View/lista_view.dart';
 
@@ -52,10 +53,20 @@ class _CentralViewState extends State<CentralView> {
                   height: 100,
                   margin: const EdgeInsets.symmetric(vertical: 5),
                   decoration: BoxDecoration(
-                    color: _hoverIndex == index ? const Color.fromARGB(255, 220, 187, 251) : Colors.grey[100],
+                    color: _hoverIndex == index
+                        ? const Color.fromARGB(255, 220, 187, 251)
+                        : Colors.grey[100],
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: ListaComp(nomeLista: listaDeNomes[index]),
+                  child: ListaComp(
+                    nomeLista: listaDeNomes[index],
+                    onExcluir: () {
+                      setState(() {
+                        SimulaBD.excluirLista(listaDeNomes[index]);
+                        listaDeNomes = SimulaBD.recuperarListas();
+                      });
+                    },
+                  ),
                 ),
               ),
             ),
@@ -63,8 +74,17 @@ class _CentralViewState extends State<CentralView> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Lógica para adicionar uma nova lista
+        onPressed: () async {
+          final novaListaCriada = await Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => NovaListaView()),
+          );
+
+          if (novaListaCriada == true) {
+            setState(() {
+              listaDeNomes = SimulaBD.recuperarListas();
+            });
+          }
         },
         child: const Icon(Icons.add),
       ),
