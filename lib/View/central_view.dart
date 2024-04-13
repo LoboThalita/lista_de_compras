@@ -31,7 +31,7 @@ class _CentralViewState extends State<CentralView> {
                 MaterialPageRoute(
                   builder: (context) => ListaView(
                     nomeLista: listaDeNomes[index],
-                    lista: SimulaBD.recuperarItens(listaDeNomes[index]),
+                    itens: SimulaBD.recuperarItens(listaDeNomes[index]),
                   ),
                 ),
               );
