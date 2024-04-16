@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lista_de_compras/Componentes/item_comp.dart';
 import 'package:lista_de_compras/Entidades/Item.dart';
 import 'package:lista_de_compras/View/editar_item_view.dart';
 import 'package:lista_de_compras/View/novo_item_view.dart';
@@ -54,7 +55,9 @@ class _ListaViewState extends State<ListaView> {
                   icon: const Icon(Icons.search),
                   onPressed: () {
                     setState(() {
-                      itens = [SimulaBD.pesquisarItem(widget.nomeLista, pesquisaController.text)];
+                      Item? resultado = SimulaBD.pesquisarItem(
+                          widget.nomeLista, pesquisaController.text);
+                      itens = resultado != null ? [resultado] : [];
                     });
                   },
                 ),
@@ -66,72 +69,36 @@ class _ListaViewState extends State<ListaView> {
               itemCount: itens.length,
               itemBuilder: (context, index) {
                 final item = itens[index];
-                return Card(
-                  margin: const EdgeInsets.symmetric(
-                      horizontal: 8.0, vertical: 4.0),
-                  child: Row(
-                    children: [
-                      Checkbox(
-                        value: item.comprado,
-                        onChanged: (value) {
-                          setState(() {
-                            SimulaBD.comprarItem(widget.nomeLista, item.nome);
-                            itens = SimulaBD.recuperarItens(widget.nomeLista);
-                          });
-                        },
-                      ),
-                      Expanded(
-                        child: ListTile(
-                          title: Text(item.nome),
-                          subtitle: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                  'Quantidade: ${item.quantidade} ${item.unidadeDeMedida}'),
-                              Text('Categoria: ${item.categoria}'),
-                              Text('Notas Adicionais: ${item.notasAdicionais}'),
-                            ],
-                          ),
-                          trailing: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              IconButton(
-                                icon: Icon(Icons.edit),
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => EditarItemView(
-                                        item: item,
-                                        nomeLista: widget.nomeLista,
-                                      ),
-                                    ),
-                                  ).then((value) {
-                                    setState(() {
-                                      itens = SimulaBD.recuperarItens(
-                                          widget.nomeLista);
-                                    });
-                                  });
-                                },
-                              ),
-                              IconButton(
-                                icon: Icon(Icons.delete,
-                                    color: Color.fromARGB(255, 191, 21, 21)),
-                                onPressed: () {
-                                  setState(() {
-                                    SimulaBD.excluirItem(
-                                        widget.nomeLista, item.nome);
-                                    itens = SimulaBD.recuperarItens(
-                                        widget.nomeLista);
-                                  });
-                                },
-                              ),
-                            ],
-                          ),
+                return ItemComp(
+                  item: item,
+                  nomeLista: widget.nomeLista,
+                  onChecked: (checkedItem) {
+                    setState(() {
+                      SimulaBD.comprarItem(widget.nomeLista, checkedItem.nome);
+                      itens = SimulaBD.recuperarItens(widget.nomeLista);
+                    });
+                  },
+                  onEdit: (editedItem) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => EditarItemView(
+                          item: editedItem,
+                          nomeLista: widget.nomeLista,
                         ),
                       ),
-                    ],
-                  ),
+                    ).then((value) {
+                      setState(() {
+                        itens = SimulaBD.recuperarItens(widget.nomeLista);
+                      });
+                    });
+                  },
+                  onDelete: (deletedItem) {
+                    setState(() {
+                      SimulaBD.excluirItem(widget.nomeLista, deletedItem.nome);
+                      itens = SimulaBD.recuperarItens(widget.nomeLista);
+                    });
+                  },
                 );
               },
             ),

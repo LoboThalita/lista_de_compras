@@ -6,39 +6,30 @@ class SimulaBD {
   static String senha = '123';
 
   static List<Lista> listas = [
-    Lista(nome: 'Lista 1', itens: [
+    Lista(nome: 'Lista Supermercado', itens: [
       Item(
-        nome: 'Item 1',
+        nome: 'Chocolate',
         quantidade: 2,
         unidadeDeMedida: 'un',
-        categoria: 'Categoria A',
-        notasAdicionais: 'Notas sobre o item 1',
+        categoria: 'Doces',
+        notasAdicionais: 'Meio amargo',
         comprado: false,
       ),
       Item(
-        nome: 'Item 2',
-        quantidade: 1.5,
-        unidadeDeMedida: 'kg',
-        categoria: 'Categoria B',
-        notasAdicionais: 'Notas sobre o item 2',
-        comprado: true,
+        nome: 'Brócolis',
+        quantidade: 100.5,
+        unidadeDeMedida: 'gm',
+        categoria: 'Legumes',
+        comprado: false,
       ),
     ]),
-    Lista(nome: 'Lista 2', itens: [
+    Lista(nome: 'Farmácia', itens: [
       Item(
-        nome: 'Item A',
+        nome: 'Remédio de dor de cabeça',
         quantidade: 3,
         unidadeDeMedida: 'un',
-        categoria: 'Categoria C',
-        notasAdicionais: 'Notas sobre o item A',
-        comprado: false,
-      ),
-      Item(
-        nome: 'Item B',
-        quantidade: 0.5,
-        unidadeDeMedida: 'kg',
-        categoria: 'Categoria D',
-        notasAdicionais: 'Notas sobre o item B',
+        categoria: 'Remédio',
+        notasAdicionais: 'De preferencia neusaudina',
         comprado: false,
       ),
     ]),
@@ -51,10 +42,8 @@ class SimulaBD {
     return false;
   }
 
-
   static String? recuperarSenha(String emailDeRecuperacao) {
-    
-    if(email == emailDeRecuperacao) return senha;
+    if (email == emailDeRecuperacao) return senha;
 
     return null;
   }
@@ -133,8 +122,9 @@ class SimulaBD {
   static void editarItem(String nomeLista, Item itemAntigo, Item novoItem) {
     int index = encontraIndexLista(nomeLista);
 
-    Item antigo =
-        listas[index].itens.firstWhere((element) => element.nome == itemAntigo.nome);
+    Item antigo = listas[index]
+        .itens
+        .firstWhere((element) => element.nome == itemAntigo.nome);
 
     antigo.nome = novoItem.nome;
     antigo.categoria = novoItem.categoria;
@@ -142,16 +132,21 @@ class SimulaBD {
     antigo.quantidade = novoItem.quantidade;
     antigo.unidadeDeMedida = novoItem.unidadeDeMedida;
   }
-  
+
   static void comprarItem(String nomeLista, String nomeItem) {
-    Item item = pesquisarItem(nomeLista, nomeItem);
-    item.comprado = !item.comprado;
+    Item? item = pesquisarItem(nomeLista, nomeItem);
+    if(item != null) item.comprado = !item.comprado;
   }
 
-  static Item pesquisarItem(String nomeLista, String nomeItem){
+  static Item? pesquisarItem(String nomeLista, String nomeItem) {
     int index = encontraIndexLista(nomeLista);
 
-    return
-        listas[index].itens.firstWhere((element) => element.nome == nomeItem);
+    try {
+      return listas[index]
+          .itens
+          .firstWhere((element) => element.nome == nomeItem);
+    } catch (e) {
+      return null;
+    }
   }
 }
