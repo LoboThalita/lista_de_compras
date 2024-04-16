@@ -22,19 +22,72 @@ class ListaView extends StatefulWidget {
 class _ListaViewState extends State<ListaView> {
   late List<Item> itens;
   late TextEditingController pesquisaController;
+  late TextEditingController novoNomeController;
 
   @override
   void initState() {
     super.initState();
     itens = widget.itens;
     pesquisaController = TextEditingController();
+    novoNomeController = TextEditingController(text: widget.nomeLista);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.nomeLista),
+        title: Row(
+          children: [
+            Expanded(
+              child: Text(widget.nomeLista),
+            ),
+            IconButton(
+              icon: Icon(Icons.edit),
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text('Editar Nome da Lista'),
+                      content: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          TextField(
+                            controller: novoNomeController,
+                            decoration: InputDecoration(
+                              labelText: 'Novo Nome',
+                            ),
+                          ),
+                        ],
+                      ),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text('Cancelar'),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            SimulaBD.editaNomeLista(
+                              widget.nomeLista,
+                              novoNomeController.text,
+                            );
+                            Navigator.pop(context);
+                            setState(() {
+                              widget.nomeLista = novoNomeController.text;
+                            });
+                          },
+                          child: Text('Salvar'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+            ),
+          ],
+        ),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -52,7 +105,7 @@ class _ListaViewState extends State<ListaView> {
                   ),
                 ),
                 IconButton(
-                  icon: const Icon(Icons.search),
+                  icon: Icon(Icons.search),
                   onPressed: () {
                     setState(() {
                       Item? resultado = SimulaBD.pesquisarItem(

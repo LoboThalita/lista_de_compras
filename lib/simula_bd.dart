@@ -58,6 +58,12 @@ class SimulaBD {
     }
   }
 
+static void editaNomeLista(String nomeAntigo, String nomeNovo){
+  int index = encontraIndexLista(nomeAntigo);
+
+  listas[index].nome = nomeNovo;
+}
+
   static List<String> recuperarListas() {
     return listas.map((lista) => lista.nome).toList();
   }
