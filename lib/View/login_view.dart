@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lista_de_compras/View/central_view.dart';
-import 'package:lista_de_compras/View/redefinir_senha_view.dart';
+import 'package:lista_de_compras/View/recuperar_senha_view.dart';
 import 'package:lista_de_compras/View/sobre_view.dart';
 import 'package:lista_de_compras/simula_bd.dart';
 
@@ -47,10 +47,10 @@ class _LoginViewState extends State<LoginView> {
     );
   }
 
-  void _redefinirSenha() {
+  void _recuperarSenha() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => RedefinirSenhaView()),
+      MaterialPageRoute(builder: (context) => RecuperarSenhaView()),
     );
   }
 
@@ -144,8 +144,8 @@ class _LoginViewState extends State<LoginView> {
               child: Text('Sobre'),
             ),
             ElevatedButton(
-              onPressed: _redefinirSenha,
-              child: Text('Redefinir Senha'),
+              onPressed: _recuperarSenha,
+              child: Text('Recuperar Senha'),
             ),
           ],
         ),

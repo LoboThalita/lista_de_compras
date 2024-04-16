@@ -52,8 +52,11 @@ class SimulaBD {
   }
 
 
-  static void redefinirSenha(String email) {
-    //Aqui ficaria a lógica de envio de email para recuperar a senha
+  static String? recuperarSenha(String emailDeRecuperacao) {
+    
+    if(email == emailDeRecuperacao) return senha;
+
+    return null;
   }
 
 //Métodos referentes a Lista

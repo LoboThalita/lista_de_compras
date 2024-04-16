@@ -1,22 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:lista_de_compras/simula_bd.dart';
 
-class RedefinirSenhaView extends StatefulWidget {
-  const RedefinirSenhaView({super.key});
+class RecuperarSenhaView extends StatefulWidget {
+  const RecuperarSenhaView({super.key});
 
   @override
   // ignore: library_private_types_in_public_api
-  _RedefinirSenhaViewState createState() => _RedefinirSenhaViewState();
+  _RecuperarSenhaViewState createState() => _RecuperarSenhaViewState();
 }
 
-class _RedefinirSenhaViewState extends State<RedefinirSenhaView> {
+class _RecuperarSenhaViewState extends State<RecuperarSenhaView> {
   final TextEditingController _emailController = TextEditingController();
+
+  bool emailValido = false;
+  String? senha;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Redefinir Senha'),
+        title: const Text('Recuperar Senha'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -24,7 +27,7 @@ class _RedefinirSenhaViewState extends State<RedefinirSenhaView> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
-              'Informe o email da conta para redefinir a senha',
+              'Informe o email da conta para Recuperar a senha',
               style: TextStyle(fontSize: 16.0),
             ),
             const SizedBox(height: 20.0),
@@ -38,9 +41,10 @@ class _RedefinirSenhaViewState extends State<RedefinirSenhaView> {
             const SizedBox(height: 20.0),
             ElevatedButton(
               onPressed: () {
+                senha = SimulaBD.recuperarSenha(_emailController.text);
                 _enviarEmail(context);
               },
-              child: const Text('Enviar'),
+              child: const Text('Recuperar'),
             ),
           ],
         ),
@@ -49,15 +53,15 @@ class _RedefinirSenhaViewState extends State<RedefinirSenhaView> {
   }
 
   void _enviarEmail(BuildContext context) {
-    SimulaBD.redefinirSenha(_emailController.text);
+    SimulaBD.recuperarSenha(_emailController.text);
 
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Email enviado'),
+          title: const Text('Recuperação de Senha'),
           content: Text(
-              'Email de recuperação de senha enviado para ${_emailController.text}'),
+              senha == null ? 'Email não encontrado no banco de dados' : 'Senha: $senha'),
           actions: <Widget>[
             TextButton(
               onPressed: () {
