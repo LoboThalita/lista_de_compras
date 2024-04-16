@@ -11,7 +11,7 @@ class NovoItemView extends StatefulWidget {
 }
 
 class _NovoItemViewState extends State<NovoItemView> {
-  final _formKey = GlobalKey<FormState>(); 
+  final _formKey = GlobalKey<FormState>();
 
   late TextEditingController nomeController;
   late TextEditingController quantidadeController;
@@ -33,18 +33,18 @@ class _NovoItemViewState extends State<NovoItemView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Novo Item'),
+        title: const Text('Novo Item'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
-          key: _formKey, 
+          key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               TextFormField(
                 controller: nomeController,
-                decoration: InputDecoration(labelText: 'Nome'),
+                decoration: const InputDecoration(labelText: 'Nome'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Campo obrigatório';
@@ -52,10 +52,10 @@ class _NovoItemViewState extends State<NovoItemView> {
                   return null;
                 },
               ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               TextFormField(
                 controller: quantidadeController,
-                decoration: InputDecoration(labelText: 'Quantidade'),
+                decoration: const InputDecoration(labelText: 'Quantidade'),
                 keyboardType: TextInputType.number,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -64,10 +64,11 @@ class _NovoItemViewState extends State<NovoItemView> {
                   return null;
                 },
               ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               TextFormField(
                 controller: unidadeController,
-                decoration: InputDecoration(labelText: 'Unidade de Medida'),
+                decoration:
+                    const InputDecoration(labelText: 'Unidade de Medida'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Campo obrigatório';
@@ -75,10 +76,10 @@ class _NovoItemViewState extends State<NovoItemView> {
                   return null;
                 },
               ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               TextFormField(
                 controller: categoriaController,
-                decoration: InputDecoration(labelText: 'Categoria'),
+                decoration: const InputDecoration(labelText: 'Categoria'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Campo obrigatório';
@@ -86,13 +87,14 @@ class _NovoItemViewState extends State<NovoItemView> {
                   return null;
                 },
               ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               TextFormField(
                 controller: notasController,
-                decoration: InputDecoration(labelText: 'Notas Adicionais'),
+                decoration:
+                    const InputDecoration(labelText: 'Notas Adicionais'),
                 maxLines: null,
               ),
-              SizedBox(height: 32.0),
+              const SizedBox(height: 32.0),
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {

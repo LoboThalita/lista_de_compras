@@ -5,7 +5,6 @@ class NovaListaView extends StatefulWidget {
   const NovaListaView({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _NovaListaViewState createState() => _NovaListaViewState();
 }
 
@@ -16,7 +15,7 @@ class _NovaListaViewState extends State<NovaListaView> {
     String nomeLista = _nomeController.text;
     if (nomeLista.isNotEmpty) {
       SimulaBD.criarLista(nomeLista);
-      Navigator.pop(context, true); 
+      Navigator.pop(context, true);
       setState(() {});
     } else {
       showDialog(

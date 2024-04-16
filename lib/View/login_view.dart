@@ -5,7 +5,7 @@ import 'package:lista_de_compras/View/sobre_view.dart';
 import 'package:lista_de_compras/simula_bd.dart';
 
 class LoginView extends StatefulWidget {
-  const LoginView({Key? key}) : super(key: key);
+  const LoginView({super.key});
 
   @override
   State<LoginView> createState() => _LoginViewState();
@@ -58,15 +58,15 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Bem vindo a Lista de Compras'),
+        title: const Text('Bem vindo a Lista de Compras'),
       ),
       body: Padding(
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              margin:  const EdgeInsets.only(bottom: 100),
+              margin: const EdgeInsets.only(bottom: 100),
               decoration: BoxDecoration(
                 color: Colors.grey[100],
                 borderRadius: BorderRadius.circular(10),
@@ -80,7 +80,7 @@ class _LoginViewState extends State<LoginView> {
                     height: 100,
                     fit: BoxFit.cover,
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                 ],
               ),
             ),
@@ -94,13 +94,13 @@ class _LoginViewState extends State<LoginView> {
                 decoration: InputDecoration(
                   labelText: 'Email',
                   errorText: _emailValido ? null : 'Por favor informe o email',
-                  contentPadding: EdgeInsets.all(10),
+                  contentPadding: const EdgeInsets.all(10),
                   border: InputBorder.none,
-                  prefixIcon: Icon(Icons.email),
+                  prefixIcon: const Icon(Icons.email),
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Container(
               decoration: BoxDecoration(
                 color: Colors.grey[100],
@@ -112,13 +112,13 @@ class _LoginViewState extends State<LoginView> {
                 decoration: InputDecoration(
                   labelText: 'Senha',
                   errorText: _senhaValida ? null : 'Por favor informe a senha',
-                  contentPadding: EdgeInsets.all(10),
+                  contentPadding: const EdgeInsets.all(10),
                   border: InputBorder.none,
-                  prefixIcon: Icon(Icons.password),
+                  prefixIcon: const Icon(Icons.password),
                 ),
               ),
             ),
-            SizedBox(height: 40),
+            const SizedBox(height: 40),
             if (!_loginValido)
               const Text(
                 'Email ou senha incorretos',
@@ -126,10 +126,10 @@ class _LoginViewState extends State<LoginView> {
                   color: Colors.red,
                 ),
               ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _login,
-              child: Text('Entrar'),
+              child: const Text('Entrar'),
             ),
           ],
         ),
@@ -141,11 +141,11 @@ class _LoginViewState extends State<LoginView> {
           children: [
             ElevatedButton(
               onPressed: () => _navegateSobre(context),
-              child: Text('Sobre'),
+              child: const Text('Sobre'),
             ),
             ElevatedButton(
               onPressed: _recuperarSenha,
-              child: Text('Recuperar Senha'),
+              child: const Text('Recuperar Senha'),
             ),
           ],
         ),

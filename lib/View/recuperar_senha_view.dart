@@ -5,7 +5,6 @@ class RecuperarSenhaView extends StatefulWidget {
   const RecuperarSenhaView({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _RecuperarSenhaViewState createState() => _RecuperarSenhaViewState();
 }
 
@@ -60,8 +59,9 @@ class _RecuperarSenhaViewState extends State<RecuperarSenhaView> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Recuperação de Senha'),
-          content: Text(
-              senha == null ? 'Email não encontrado no banco de dados' : 'Senha: $senha'),
+          content: Text(senha == null
+              ? 'Email não encontrado no banco de dados'
+              : 'Senha: $senha'),
           actions: <Widget>[
             TextButton(
               onPressed: () {

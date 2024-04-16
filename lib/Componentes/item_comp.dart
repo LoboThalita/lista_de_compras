@@ -9,13 +9,13 @@ class ItemComp extends StatelessWidget {
   final Function(Item) onDelete;
 
   const ItemComp({
-    Key? key,
+    super.key,
     required this.item,
     required this.nomeLista,
     required this.onChecked,
     required this.onEdit,
     required this.onDelete,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -42,11 +42,11 @@ class ItemComp extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   IconButton(
-                    icon: Icon(Icons.edit),
+                    icon: const Icon(Icons.edit),
                     onPressed: () => onEdit(item),
                   ),
                   IconButton(
-                    icon: Icon(Icons.delete, color: Color.fromARGB(255, 191, 21, 21)),
+                    icon: const Icon(Icons.delete, color: Color.fromARGB(255, 191, 21, 21)),
                     onPressed: () => onDelete(item),
                   ),
                 ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lista_de_compras/simula_bd.dart';
 
 class SobreView extends StatelessWidget {
   const SobreView({super.key});
@@ -9,31 +10,32 @@ class SobreView extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Sobre o Projeto'),
       ),
-      body: const Padding(
+      body: Padding(
         padding: EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Lista de compras',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            Text(
+            const Text(
               'App desenvolvido para a matéria eletiva de Programação em Dispositivos Móveis, Ministrada pelo professor Rodrigo Plotz pela FATEC de Ribeirão Preto',
               style: TextStyle(fontSize: 16),
             ),
-            Text(
+            const SizedBox(height: 30),
+            const Text(
               'Login:',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            Text('Email: adm@gmail.com'),
-            Text('Senha: 123'),
+            Text('Email: ${SimulaBD.email}'),
+            Text('Senha: ${SimulaBD.senha}'),
           ],
         ),
       ),

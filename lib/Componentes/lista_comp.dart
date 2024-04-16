@@ -4,12 +4,12 @@ class ListaComp extends StatelessWidget {
   final String nomeLista;
   final VoidCallback? onExcluir;
 
-  const ListaComp({Key? key, required this.nomeLista, this.onExcluir}) : super(key: key);
+  const ListaComp({super.key, required this.nomeLista, this.onExcluir});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(8),
+      padding: const EdgeInsets.all(8),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -34,7 +34,7 @@ class ListaComp extends StatelessWidget {
           ),
           IconButton(
             onPressed: onExcluir,
-            icon: Icon(Icons.delete, color: Color.fromARGB(255, 191, 21, 21),),
+            icon: const Icon(Icons.delete, color: Color.fromARGB(255, 191, 21, 21),),
           ),
         ],
       ),

@@ -6,14 +6,16 @@ class EditarItemView extends StatefulWidget {
   final Item item;
   final String nomeLista;
 
-  EditarItemView({Key? key, required this.item, required this.nomeLista})
-      : super(key: key);
+  const EditarItemView(
+      {super.key, required this.item, required this.nomeLista});
 
   @override
   _EditarItemViewState createState() => _EditarItemViewState();
 }
 
 class _EditarItemViewState extends State<EditarItemView> {
+  final _formKey = GlobalKey<FormState>();
+
   late TextEditingController nomeController;
   late TextEditingController quantidadeController;
   late TextEditingController unidadeController;
@@ -36,58 +38,92 @@ class _EditarItemViewState extends State<EditarItemView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Editar Item'),
+        title: const Text('Editar Item'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            TextFormField(
-              controller: nomeController,
-              decoration: InputDecoration(labelText: 'Nome'),
-            ),
-            SizedBox(height: 16.0),
-            TextFormField(
-              controller: quantidadeController,
-              decoration: InputDecoration(labelText: 'Quantidade'),
-              keyboardType: TextInputType.number,
-            ),
-            SizedBox(height: 16.0),
-            TextFormField(
-              controller: unidadeController,
-              decoration: InputDecoration(labelText: 'Unidade de Medida'),
-            ),
-            SizedBox(height: 16.0),
-            TextFormField(
-              controller: categoriaController,
-              decoration: InputDecoration(labelText: 'Categoria'),
-            ),
-            SizedBox(height: 16.0),
-            TextFormField(
-              controller: notasController,
-              decoration: InputDecoration(labelText: 'Notas Adicionais'),
-              maxLines: null,
-            ),
-            SizedBox(height: 32.0),
-            ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  Item novoItem = Item(
-                    nome: nomeController.text,
-                    quantidade: double.parse(quantidadeController.text),
-                    unidadeDeMedida: unidadeController.text,
-                    categoria: categoriaController.text,
-                    notasAdicionais: notasController.text,
-                    comprado: widget.item.comprado,
-                  );
-                  SimulaBD.editarItem(widget.nomeLista, widget.item, novoItem);
-                  Navigator.pop(context);
-                });
-              },
-              child: Text('Salvar Alterações'),
-            ),
-          ],
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              TextFormField(
+                controller: nomeController,
+                decoration: const InputDecoration(labelText: 'Nome'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Campo obrigatório';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16.0),
+              TextFormField(
+                controller: quantidadeController,
+                decoration: const InputDecoration(labelText: 'Quantidade'),
+                keyboardType: TextInputType.number,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Campo obrigatório';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16.0),
+              TextFormField(
+                controller: unidadeController,
+                decoration:
+                    const InputDecoration(labelText: 'Unidade de Medida'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Campo obrigatório';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16.0),
+              TextFormField(
+                controller: categoriaController,
+                decoration: const InputDecoration(labelText: 'Categoria'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Campo obrigatório';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16.0),
+              TextFormField(
+                controller: notasController,
+                decoration:
+                    const InputDecoration(labelText: 'Notas Adicionais'),
+                maxLines: null,
+              ),
+              const SizedBox(height: 32.0),
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    if (_formKey.currentState!.validate()) {
+                      Item novoItem = Item(
+                        nome: nomeController.text,
+                        quantidade: double.parse(quantidadeController.text),
+                        unidadeDeMedida: unidadeController.text,
+                        categoria: categoriaController.text,
+                        notasAdicionais: notasController.text,
+                        comprado: widget.item.comprado,
+                      );
+
+                      SimulaBD.editarItem(
+                          widget.nomeLista, widget.item, novoItem);
+                      Navigator.pop(context);
+                    }
+                    ;
+                  });
+                },
+                child: const Text('Salvar Alterações'),
+              ),
+            ],
+          ),
         ),
       ),
     );

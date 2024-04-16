@@ -37,15 +37,11 @@ class SimulaBD {
 
 //Métodos referentes a login
   static bool login(String Email, String Senha) {
-    if (Email == email && Senha == senha) return true;
-
-    return false;
+    return Email == email && Senha == senha ? true : false;
   }
 
   static String? recuperarSenha(String emailDeRecuperacao) {
-    if (email == emailDeRecuperacao) return senha;
-
-    return null;
+    return email == emailDeRecuperacao ? senha : null;
   }
 
 //Métodos referentes a Lista
@@ -58,11 +54,11 @@ class SimulaBD {
     }
   }
 
-static void editaNomeLista(String nomeAntigo, String nomeNovo){
-  int index = encontraIndexLista(nomeAntigo);
+  static void editaNomeLista(String nomeAntigo, String nomeNovo) {
+    int index = encontraIndexLista(nomeAntigo);
 
-  listas[index].nome = nomeNovo;
-}
+    listas[index].nome = nomeNovo;
+  }
 
   static List<String> recuperarListas() {
     return listas.map((lista) => lista.nome).toList();
@@ -88,14 +84,8 @@ static void editaNomeLista(String nomeAntigo, String nomeNovo){
   }
 
   static Lista? encontraLista(String nomeLista) {
-    Lista? listaEncontrada;
-    for (int i = 0; i < listas.length; i++) {
-      if (listas[i].nome == nomeLista) {
-        listaEncontrada = listas[i];
-        break;
-      }
-    }
-    return listaEncontrada;
+    int index = encontraIndexLista(nomeLista);
+    return listas[index];
   }
 
 //Métodos referentes aos itens
@@ -118,11 +108,7 @@ static void editaNomeLista(String nomeAntigo, String nomeNovo){
   static List<Item> recuperarItens(String nomeLista) {
     Lista? listaEncontrada = encontraLista(nomeLista);
 
-    if (listaEncontrada != null) {
-      return listaEncontrada.itens;
-    } else {
-      return [];
-    }
+    return listaEncontrada != null ? listaEncontrada.itens : [];
   }
 
   static void editarItem(String nomeLista, Item itemAntigo, Item novoItem) {
@@ -141,7 +127,7 @@ static void editaNomeLista(String nomeAntigo, String nomeNovo){
 
   static void comprarItem(String nomeLista, String nomeItem) {
     Item? item = pesquisarItem(nomeLista, nomeItem);
-    if(item != null) item.comprado = !item.comprado;
+    if (item != null) item.comprado = !item.comprado;
   }
 
   static Item? pesquisarItem(String nomeLista, String nomeItem) {

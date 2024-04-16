@@ -5,7 +5,7 @@ import 'package:lista_de_compras/simula_bd.dart';
 import 'package:lista_de_compras/View/lista_view.dart';
 
 class CentralView extends StatefulWidget {
-  const CentralView({Key? key}) : super(key: key);
+  const CentralView({super.key});
 
   @override
   State<CentralView> createState() => _CentralViewState();

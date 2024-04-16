@@ -10,10 +10,10 @@ class ListaView extends StatefulWidget {
   List<Item> itens;
 
   ListaView({
-    Key? key,
+    super.key,
     required this.nomeLista,
     required this.itens,
-  }) : super(key: key);
+  });
 
   @override
   _ListaViewState createState() => _ListaViewState();
@@ -42,19 +42,19 @@ class _ListaViewState extends State<ListaView> {
               child: Text(widget.nomeLista),
             ),
             IconButton(
-              icon: Icon(Icons.edit),
+              icon: const Icon(Icons.edit),
               onPressed: () {
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
-                      title: Text('Editar Nome da Lista'),
+                      title: const Text('Editar Nome da Lista'),
                       content: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           TextField(
                             controller: novoNomeController,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               labelText: 'Novo Nome',
                             ),
                           ),
@@ -65,7 +65,7 @@ class _ListaViewState extends State<ListaView> {
                           onPressed: () {
                             Navigator.pop(context);
                           },
-                          child: Text('Cancelar'),
+                          child: const Text('Cancelar'),
                         ),
                         ElevatedButton(
                           onPressed: () {
@@ -78,7 +78,7 @@ class _ListaViewState extends State<ListaView> {
                               widget.nomeLista = novoNomeController.text;
                             });
                           },
-                          child: Text('Salvar'),
+                          child: const Text('Salvar'),
                         ),
                       ],
                     );
@@ -99,13 +99,13 @@ class _ListaViewState extends State<ListaView> {
                 Expanded(
                   child: TextField(
                     controller: pesquisaController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'Pesquisar itens...',
                     ),
                   ),
                 ),
                 IconButton(
-                  icon: Icon(Icons.search),
+                  icon: const Icon(Icons.search),
                   onPressed: () {
                     setState(() {
                       Item? resultado = SimulaBD.pesquisarItem(
