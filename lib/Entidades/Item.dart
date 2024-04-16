@@ -3,7 +3,7 @@ class Item {
   double quantidade;
   String unidadeDeMedida;
   String categoria;
-  String notasAdicionais;
+  String? notasAdicionais;
   bool comprado;
 
   Item({
@@ -11,7 +11,7 @@ class Item {
     required this.quantidade,
     required this.unidadeDeMedida,
     required this.categoria,
-    required this.notasAdicionais,
+    this.notasAdicionais,
     required this.comprado,
   });
 }

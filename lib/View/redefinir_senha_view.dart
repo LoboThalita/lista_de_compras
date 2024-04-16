@@ -10,7 +10,7 @@ class RedefinirSenhaView extends StatefulWidget {
 }
 
 class _RedefinirSenhaViewState extends State<RedefinirSenhaView> {
-  final TextEditingController _senhaController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -24,28 +24,50 @@ class _RedefinirSenhaViewState extends State<RedefinirSenhaView> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
-              'Informe a nova senha',
+              'Informe o email da conta para redefinir a senha',
               style: TextStyle(fontSize: 16.0),
             ),
             const SizedBox(height: 20.0),
             TextField(
-              controller: _senhaController,
+              controller: _emailController,
               decoration: const InputDecoration(
-                labelText: 'Nova senha',
+                labelText: 'email',
                 border: OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: 20.0),
             ElevatedButton(
               onPressed: () {
-                SimulaBD.redefinirSenha(_senhaController.text);
-                Navigator.pop(context);
+                _enviarEmail(context);
               },
-              child: const Text('Redefinir'),
+              child: const Text('Enviar'),
             ),
           ],
         ),
       ),
+    );
+  }
+
+  void _enviarEmail(BuildContext context) {
+    SimulaBD.redefinirSenha(_emailController.text);
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Email enviado'),
+          content: Text(
+              'Email de recuperação de senha enviado para ${_emailController.text}'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

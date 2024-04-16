@@ -20,11 +20,13 @@ class ListaView extends StatefulWidget {
 
 class _ListaViewState extends State<ListaView> {
   late List<Item> itens;
+  late TextEditingController pesquisaController;
 
   @override
   void initState() {
     super.initState();
     itens = widget.itens;
+    pesquisaController = TextEditingController();
   }
 
   @override
@@ -40,8 +42,9 @@ class _ListaViewState extends State<ListaView> {
             padding: const EdgeInsets.all(8.0),
             child: Row(
               children: [
-                const Expanded(
+                Expanded(
                   child: TextField(
+                    controller: pesquisaController,
                     decoration: InputDecoration(
                       hintText: 'Pesquisar itens...',
                     ),
@@ -49,7 +52,11 @@ class _ListaViewState extends State<ListaView> {
                 ),
                 IconButton(
                   icon: const Icon(Icons.search),
-                  onPressed: () {},
+                  onPressed: () {
+                    setState(() {
+                      itens = [SimulaBD.pesquisarItem(widget.nomeLista, pesquisaController.text)];
+                    });
+                  },
                 ),
               ],
             ),
@@ -68,7 +75,6 @@ class _ListaViewState extends State<ListaView> {
                         value: item.comprado,
                         onChanged: (value) {
                           setState(() {
-                            item.comprado = value!;
                             SimulaBD.comprarItem(widget.nomeLista, item.nome);
                             itens = SimulaBD.recuperarItens(widget.nomeLista);
                           });
@@ -95,9 +101,17 @@ class _ListaViewState extends State<ListaView> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) =>
-                                            EditarItemView(item: item)),
-                                  );
+                                      builder: (context) => EditarItemView(
+                                        item: item,
+                                        nomeLista: widget.nomeLista,
+                                      ),
+                                    ),
+                                  ).then((value) {
+                                    setState(() {
+                                      itens = SimulaBD.recuperarItens(
+                                          widget.nomeLista);
+                                    });
+                                  });
                                 },
                               ),
                               IconButton(

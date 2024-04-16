@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:lista_de_compras/Entidades/Item.dart'; // Importe sua classe de entidade Item aqui
+import 'package:lista_de_compras/Entidades/Item.dart';
+import 'package:lista_de_compras/simula_bd.dart'; // Importe sua classe de entidade Item aqui
 
 class EditarItemView extends StatefulWidget {
-  final Item item; // Item a ser editado
+  final Item item;
+  final String nomeLista;
 
-  EditarItemView({Key? key, required this.item}) : super(key: key);
+  EditarItemView({Key? key, required this.item, required this.nomeLista})
+      : super(key: key);
 
   @override
   _EditarItemViewState createState() => _EditarItemViewState();
@@ -23,7 +26,8 @@ class _EditarItemViewState extends State<EditarItemView> {
     nomeController = TextEditingController(text: widget.item.nome);
     quantidadeController =
         TextEditingController(text: widget.item.quantidade.toString());
-    unidadeController = TextEditingController(text: widget.item.unidadeDeMedida);
+    unidadeController =
+        TextEditingController(text: widget.item.unidadeDeMedida);
     categoriaController = TextEditingController(text: widget.item.categoria);
     notasController = TextEditingController(text: widget.item.notasAdicionais);
   }
@@ -68,15 +72,18 @@ class _EditarItemViewState extends State<EditarItemView> {
             SizedBox(height: 32.0),
             ElevatedButton(
               onPressed: () {
-                Item novoItem = Item(
-                  nome: nomeController.text,
-                  quantidade: double.parse(quantidadeController.text),
-                  unidadeDeMedida: unidadeController.text,
-                  categoria: categoriaController.text,
-                  notasAdicionais: notasController.text,
-                  comprado: widget.item.comprado,
-                );
-                
+                setState(() {
+                  Item novoItem = Item(
+                    nome: nomeController.text,
+                    quantidade: double.parse(quantidadeController.text),
+                    unidadeDeMedida: unidadeController.text,
+                    categoria: categoriaController.text,
+                    notasAdicionais: notasController.text,
+                    comprado: widget.item.comprado,
+                  );
+                  SimulaBD.editarItem(widget.nomeLista, widget.item, novoItem);
+                  Navigator.pop(context);
+                });
               },
               child: Text('Salvar Alterações'),
             ),
@@ -88,7 +95,6 @@ class _EditarItemViewState extends State<EditarItemView> {
 
   @override
   void dispose() {
-    // Limpeza dos controladores de texto
     nomeController.dispose();
     quantidadeController.dispose();
     unidadeController.dispose();

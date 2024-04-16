@@ -51,8 +51,9 @@ class SimulaBD {
     return false;
   }
 
-  static void redefinirSenha(String Senha) {
-    senha = Senha;
+
+  static void redefinirSenha(String email) {
+    //Aqui ficaria a lógica de envio de email para recuperar a senha
   }
 
 //Métodos referentes a Lista
@@ -126,11 +127,28 @@ class SimulaBD {
     }
   }
 
-  static void comprarItem(String nomeLista, String nomeItem) {
+  static void editarItem(String nomeLista, Item itemAntigo, Item novoItem) {
     int index = encontraIndexLista(nomeLista);
 
-    Item item = listas[index].itens.firstWhere((element) => element.nome == nomeItem);
+    Item antigo =
+        listas[index].itens.firstWhere((element) => element.nome == itemAntigo.nome);
 
+    antigo.nome = novoItem.nome;
+    antigo.categoria = novoItem.categoria;
+    antigo.notasAdicionais = novoItem.notasAdicionais;
+    antigo.quantidade = novoItem.quantidade;
+    antigo.unidadeDeMedida = novoItem.unidadeDeMedida;
+  }
+  
+  static void comprarItem(String nomeLista, String nomeItem) {
+    Item item = pesquisarItem(nomeLista, nomeItem);
     item.comprado = !item.comprado;
+  }
+
+  static Item pesquisarItem(String nomeLista, String nomeItem){
+    int index = encontraIndexLista(nomeLista);
+
+    return
+        listas[index].itens.firstWhere((element) => element.nome == nomeItem);
   }
 }
